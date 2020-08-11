@@ -29,3 +29,4 @@ arr=list(int(i) for i in input().strip().split(' '))
 l = ll(arr[:-1])
 len=lengthRecursive(l)
 print(len)
+

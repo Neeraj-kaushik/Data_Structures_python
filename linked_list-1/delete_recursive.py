@@ -4,17 +4,19 @@ class Node:
         self.next = None
 
 def deleteRec(head, i):
+    if head == None:
+        return None
     if i < 0:
         return head
     if i == 0 :
         return head.next
-    if head == None:
-        return None
+    
     
     dele = deleteRec(head.next, i-1)
     head.next = dele
     
-    return head 
+    return head    
+    
 
 def ll(arr):
     if len(arr)==0:
@@ -32,13 +34,12 @@ def printll(head):
         head = head.next
     print()
 
-# Main
+
 from sys import setrecursionlimit
 setrecursionlimit(11000)
-# Read the link list elements including -1
 arr=list(int(i) for i in input().strip().split(' '))
-# Create a Linked list after removing -1 from list
 l = ll(arr[:-1])
 i=int(input())
 l = deleteRec(l, i)
 printll(l)
+

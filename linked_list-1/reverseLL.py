@@ -1,4 +1,3 @@
-
 from sys import stdin, setrecursionlimit
 setrecursionlimit(10 ** 6)
 
@@ -15,10 +14,8 @@ def printReverse(head) :
     if head is None or head.next is None:
         return head
     smallhead=printReverse(head.next)
-    curr=smallhead
-    while curr.next is not None:
-        curr=curr.next
-    curr.next=head
+    tail=head.next
+    tail.next=head
     head.next=None
     return smallhead
 
@@ -63,8 +60,7 @@ while t > 0 :
 
     head = takeInput()
     a=printReverse(head)
-    printLinkedList(a
-    )   
+    printLinkedList(a)   
 
 
     t -= 1
