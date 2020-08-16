@@ -25,3 +25,4 @@ s1 = [int(ele) for ele in input().split()]
 s2 = []
 reverseStack(s1,s2)
 while(len(s1) !=0):
+    print(s1.pop(),end= ' ')
