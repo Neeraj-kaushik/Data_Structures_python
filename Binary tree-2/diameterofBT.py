@@ -5,21 +5,21 @@ class BinaryTreeNode:
         self.left = None
         self.right = None
 
-def no desWithoutSibling(root):
+def height(root):
     if root == None:
-        return 
-    
-    elif root.left is not None and root.right is not None:
-        nodesWithoutSibling(root.left)
-        nodesWithoutSibling(root.right)
-    
-    elif root.right is not None:
-        print(root.right.data)
-        nodesWithoutSibling(root.right)
+        return 0
+    return 1 + max(height(root.right), height(root.left))
         
-    elif root.left is not None:
-        print(root.left.data)
-        nodesWithoutSibling(root.left)
+def diameter(root):
+    if root == None:
+        return 0
+    
+    lh= height(root.left) + height(root.right)
+    option2 = diameter(root.left)
+    option3 = diameter(root.right)
+    
+    return max(lh  + 1, option2, option3)
+    
 
 def buildLevelTree(levelorder):
     index = 0
@@ -40,7 +40,6 @@ def buildLevelTree(levelorder):
             q.put(leftNode)
         rightChild = levelorder[index]
         index += 1
-
         if rightChild != -1:
             rightNode = BinaryTreeNode(rightChild)
             currentNode.right =rightNode
@@ -50,4 +49,4 @@ def buildLevelTree(levelorder):
 # Main
 levelOrder = [int(i) for i in input().strip().split()]
 root = buildLevelTree(levelOrder)
-nodesWithoutSibling(root)
+print(diameter(root))

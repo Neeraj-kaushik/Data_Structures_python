@@ -5,21 +5,18 @@ class BinaryTreeNode:
         self.left = None
         self.right = None
 
-def no desWithoutSibling(root):
-    if root == None:
-        return 
-    
-    elif root.left is not None and root.right is not None:
-        nodesWithoutSibling(root.left)
-        nodesWithoutSibling(root.right)
-    
-    elif root.right is not None:
-        print(root.right.data)
-        nodesWithoutSibling(root.right)
-        
-    elif root.left is not None:
-        print(root.left.data)
-        nodesWithoutSibling(root.left)
+def rootToLeafPathsSumToK(root, k,lst):
+            if root==None:
+                return None
+            if(root.left==None and root.right==None):
+                    if root.data==k:
+                        lst.append(root.data)
+                        print(*lst)
+                        return 
+            lst.append(root.data)
+            rootToLeafPathsSumToK(root.left, k-root.data,lst)
+            rootToLeafPathsSumToK(root.right, k-root.data,lst)
+            del lst[-1]
 
 def buildLevelTree(levelorder):
     index = 0
@@ -40,7 +37,6 @@ def buildLevelTree(levelorder):
             q.put(leftNode)
         rightChild = levelorder[index]
         index += 1
-
         if rightChild != -1:
             rightNode = BinaryTreeNode(rightChild)
             currentNode.right =rightNode
@@ -50,4 +46,5 @@ def buildLevelTree(levelorder):
 # Main
 levelOrder = [int(i) for i in input().strip().split()]
 root = buildLevelTree(levelOrder)
-nodesWithoutSibling(root)
+k=int(input())
+rootToLeafPathsSumToK(root, k,[])

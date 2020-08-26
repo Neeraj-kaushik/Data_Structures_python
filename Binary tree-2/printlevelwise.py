@@ -5,21 +5,37 @@ class BinaryTreeNode:
         self.left = None
         self.right = None
 
-def no desWithoutSibling(root):
+def printLevelWise(root):
+    q = queue.Queue()    
+
     if root == None:
-        return 
+        return None
     
-    elif root.left is not None and root.right is not None:
-        nodesWithoutSibling(root.left)
-        nodesWithoutSibling(root.right)
+    q.put(root)
     
-    elif root.right is not None:
-        print(root.right.data)
-        nodesWithoutSibling(root.right)
+    while (not(q.empty())):
+        a = q.get()
+        print(a.data, end = ":")
         
-    elif root.left is not None:
-        print(root.left.data)
-        nodesWithoutSibling(root.left)
+        leftChild = a.left
+        if leftChild != None:
+            print("L:", end = "")
+            print(leftChild.data, end = ",")
+            q.put(leftChild)
+        else:
+            print("L:", end = "")
+            print(-1, end = ",")
+            
+        rightChild = a.right
+        if rightChild != None:
+            print("R:", end = "")
+            print(rightChild.data)
+            q.put(rightChild)
+        else:
+            print("R:", end = "")
+            print(-1)
+                      
+    return root
 
 def buildLevelTree(levelorder):
     index = 0
@@ -40,14 +56,13 @@ def buildLevelTree(levelorder):
             q.put(leftNode)
         rightChild = levelorder[index]
         index += 1
-
         if rightChild != -1:
             rightNode = BinaryTreeNode(rightChild)
             currentNode.right =rightNode
             q.put(rightNode)
     return root
 
-# Main
+# Main 
 levelOrder = [int(i) for i in input().strip().split()]
 root = buildLevelTree(levelOrder)
-nodesWithoutSibling(root)
+printLevelWise(root)

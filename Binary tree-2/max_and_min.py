@@ -5,21 +5,41 @@ class BinaryTreeNode:
         self.left = None
         self.right = None
 
-def no desWithoutSibling(root):
-    if root == None:
-        return 
-    
-    elif root.left is not None and root.right is not None:
-        nodesWithoutSibling(root.left)
-        nodesWithoutSibling(root.right)
-    
-    elif root.right is not None:
-        print(root.right.data)
-        nodesWithoutSibling(root.right)
+INT_MIN = -2147483648
+INT_MAX = 2147483647
+def findMax(root): 
+       
+    if (root == None):  
+        return INT_MIN
+    res = root.data 
+    lres = findMax(root.left)  
+    rres = findMax(root.right)  
+    if (lres > res): 
+        res = lres  
+    if (rres > res):  
+        res = rres  
+    return res 
+
+def findMin(root):  
+    if (root == None):  
+        return INT_MAX
+  
+    res = root.data 
+    lres = findMin(root.left)  
+    rres = findMin(root.right)  
+    if (lres < res): 
+        res = lres  
+    if (rres < res):  
+        res = rres  
         
-    elif root.left is not None:
-        print(root.left.data)
-        nodesWithoutSibling(root.left)
+    return res 
+
+
+def minMax(root):
+    min = findMin(root)
+    max = findMax(root)
+    
+    return min, max
 
 def buildLevelTree(levelorder):
     index = 0
@@ -40,7 +60,6 @@ def buildLevelTree(levelorder):
             q.put(leftNode)
         rightChild = levelorder[index]
         index += 1
-
         if rightChild != -1:
             rightNode = BinaryTreeNode(rightChild)
             currentNode.right =rightNode
@@ -50,4 +69,5 @@ def buildLevelTree(levelorder):
 # Main
 levelOrder = [int(i) for i in input().strip().split()]
 root = buildLevelTree(levelOrder)
-nodesWithoutSibling(root)
+minimum, maximum = minMax(root)
+print(maximum, minimum)

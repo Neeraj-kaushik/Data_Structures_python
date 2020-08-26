@@ -5,21 +5,15 @@ class BinaryTreeNode:
         self.left = None
         self.right = None
 
-def no desWithoutSibling(root):
-    if root == None:
-        return 
-    
-    elif root.left is not None and root.right is not None:
-        nodesWithoutSibling(root.left)
-        nodesWithoutSibling(root.right)
-    
-    elif root.right is not None:
-        print(root.right.data)
-        nodesWithoutSibling(root.right)
-        
-    elif root.left is not None:
-        print(root.left.data)
-        nodesWithoutSibling(root.left)
+def mirrorBinaryTree(root):
+    if root is None:
+        return None
+    if root.left is None and root.right is None :
+        return None
+    mirrorBinaryTree(root.left)
+    mirrorBinaryTree(root.right)
+    root.left,root.right=root.right,root.left
+    return root
 
 def buildLevelTree(levelorder):
     index = 0
@@ -40,14 +34,34 @@ def buildLevelTree(levelorder):
             q.put(leftNode)
         rightChild = levelorder[index]
         index += 1
-
         if rightChild != -1:
             rightNode = BinaryTreeNode(rightChild)
             currentNode.right =rightNode
             q.put(rightNode)
     return root
 
+# Problem ID 353, Level order traversal
+def printLevelATNewLine(root):
+    # Given a binary tree, print the level order traversal. Make sure each level
+    # start in new line.
+    if root==None:
+        return
+    inputQ = queue.Queue()
+    outputQ = queue.Queue()
+    inputQ.put(root)
+    while not inputQ.empty():
+        while not inputQ.empty():
+            curr = inputQ.get()
+            print(curr.data, end=' ')
+            if curr.left!=None:
+                outputQ.put(curr.left)
+            if curr.right!=None:
+                outputQ.put(curr.right)
+        print()
+        inputQ, outputQ = outputQ, inputQ
+
 # Main
 levelOrder = [int(i) for i in input().strip().split()]
 root = buildLevelTree(levelOrder)
-nodesWithoutSibling(root)
+mirrorBinaryTree(root)
+printLevelATNewLine(root)
